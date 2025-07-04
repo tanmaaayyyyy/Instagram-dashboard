@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Analytics Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* CSS Reset */
+        *, *::before, *::after {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+        }
+
+        /* Root variables for theme */
+        :root {
+            --header-height: 64px;
+            --color-bg: rgba(255, 255, 255, 0.75);
+            --color-bg-gradient-start: rgba(248, 250, 252, 0.85);
+            --color-bg-gradient-end: rgba(241, 245, 249, 0.85);
+            --color-text: #1e293b;
+            --color-text-muted: #64748b;
+            --color-primary: #6366f1;
+            --color-primary-hover: #4f46e5;
+            --color-shadow: rgba(99, 102, 241, 0.25);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 12px;
+            --transition-fast: 0.3s ease-out;
+            --z-header: 1000;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: var(--font-family);
+            background: #f9fafb;
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Beautiful Header Styling */
+        header {
+            position: sticky;
+            top: 0;
+            height: var(--header-height);
+            width: 100%;
+            background: linear-gradient(90deg, var(--color-bg-gradient-start), var(--color-bg-gradient-end));
+            backdrop-filter: saturate(180%) blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing-lg);
+            box-shadow: 0 4px 32px var(--color-shadow);
+            z-index: var(--z-header);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-primary);
+            letter-spacing: 0.06em;
+        }
+
+        .logo-icon {
+            font-family: 'Material Icons';
+            font-size: 2rem;
+            margin-right: var(--spacing-sm);
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--color-text);
+            font-weight: 600;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0%;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width var(--transition-fast) ease, left var(--transition-fast) ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content Styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn .material-icons {
+            margin-right: 8px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            gap: var(--spacing-lg);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            margin-top: var(--spacing-lg);
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto var(--spacing-md);
+            border: 3px solid var(--color-primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .post-media {
+            width: 100%;
+            border-radius: var(--border-radius);
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-md);
+        }
+
+        footer {
+            padding: var(--spacing-xl);
+            text-align: center;
+            background: white;
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header role="banner" aria-label="Primary">
+        <a href="/" class="logo" aria-label="Homepage">
+            <span class="logo-icon" aria-hidden="true">psychology</span>
+            <span>AI Platform</span>
+        </a>
+
+        <nav aria-label="Primary navigation" class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="{{ url_for('dashboard.dashboard') }}" class="nav-link">Instagram Dashboard</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <button id="refresh-btn" class="btn" style="margin-bottom: var(--spacing-lg);">
+            <span class="material-icons">refresh</span>
+            Refresh Data
+        </button>
+            <!-- Save Growth Button -->
+        <button id="saveGrowthBtn" class="btn" style="margin-top: var(--spacing-xl);">
+            <span class="material-icons">save</span>
+            Save Growth
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="material-icons" style="font-size: 3rem; color: var(--color-primary);">cached</div>
+            <p>Loading Instagram data...</p>
+        </div>
+        
+        <div id="dashboard-content">
+            <div class="dashboard-grid">
+                <!-- Profile Card -->
+                <div class="card profile-card">
+                    <img id="profile-pic" class="profile-pic" src="" alt="Profile Picture">
+                    <h2 id="profile-name">Loading...</h2>
+                    <p id="profile-username">@username</p>
+                    <p id="profile-bio" style="color: var(--color-text-muted);"></p>
+                    <a id="profile-website" href="#" target="_blank" style="color: var(--color-primary); text-decoration: none;"></a>
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="follower-count">0</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="post-count">0</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Posts -->
+                <div class="card" style="grid-column: span 2;">
+                    <h2>Recent Posts</h2>
+                    <div class="dashboard-grid" id="posts-container">
+                        <!-- Posts will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 AI Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Your existing JavaScript remains unchanged
+        document.addEventListener('DOMContentLoaded', fetchData);
+        document.getElementById('refresh-btn').addEventListener('click', fetchData);
+        
+        async function fetchData() {
+            const loading = document.getElementById('loading');
+            const content = document.getElementById('dashboard-content');
+            
+            loading.style.display = 'block';
+            content.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/instagram/stats');
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                updateDashboard(data);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to fetch data. Check console for details.');
+            } finally {
+                loading.style.display = 'none';
+                content.style.display = 'block';
+            }
+        }
+        
+        function updateDashboard(data) {
+            // Update profile info
+            document.getElementById('profile-pic').src = data.account.profile_pic;
+            document.getElementById('profile-name').textContent = data.account.name;
+            document.getElementById('profile-username').textContent = `@${data.account.username}`;
+            document.getElementById('profile-bio').textContent = data.account.bio || "No bio available";
+            document.getElementById('profile-website').textContent = data.account.website || "";
+            document.getElementById('profile-website').href = data.account.website || "#";
+            
+            // Update stats
+            document.getElementById('follower-count').textContent = data.account.followers.toLocaleString();
+            document.getElementById('post-count').textContent = data.account.posts;
+            
+            // Update posts
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            
+            data.recent_posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'card post-card';
+                postElement.innerHTML = `
+                    <img src="${post.media_url || post.thumbnail_url}" class="post-media" alt="Post media">
+                    <p>${post.caption || "No caption"}</p>
+                    <div class="post-stats">
+                        <span><span class="material-icons" style="vertical-align: middle; color: red;">favorite</span> ${post.like_count || 0}</span>
+                        <span><span class="material-icons" style="vertical-align: middle; color: var(--color-text-muted);">comment</span> ${post.comments_count || 0}</span>
+                        <button class="btn" onclick="downloadPost('${post.id}', '${post.media_url}')" style="padding: 5px 10px; font-size: 0.8rem;">
+                            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">download</span> Download
+                        </button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+        
+        async function downloadPost(postId, mediaUrl) {
+            try {
+                const response = await fetch('/api/instagram/download', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        post_id: postId,
+                        media_url: mediaUrl
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('Download completed!');
+                } else {
+                    alert('Download failed: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Download failed. Check console for details.');
+            }
+        }
+
+        document.getElementById("saveGrowthBtn").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/save_growth", {
+                    method: "POST",
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message);
+                } else {
+                    alert("Error: " + data.error);
+                }
+            } catch (err) {
+                console.error("Request failed", err);
+                alert("Something went wrong");
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+        document.getElementById('refresh-btn').addEventListener('click', fetchData);
+        
+        async function fetchData() {
+            const loading = document.getElementById('loading');
+            const content = document.getElementById('dashboard-content');
+            
+            loading.style.display = 'block';
+            content.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/instagram/stats');
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                updateDashboard(data);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to fetch data. Check console for details.');
+            } finally {
+                loading.style.display = 'none';
+                content.style.display = 'block';
+            }
+        }
+        
+        function updateDashboard(data) {
+            // Update profile info
+            document.getElementById('profile-pic').src = data.account.profile_pic;
+            document.getElementById('profile-name').textContent = data.account.name;
+            document.getElementById('profile-username').textContent = `@${data.account.username}`;
+            document.getElementById('profile-bio').textContent = data.account.bio || "No bio available";
+            document.getElementById('profile-website').textContent = data.account.website || "";
+            document.getElementById('profile-website').href = data.account.website || "#";
+            
+            // Update stats
+            document.getElementById('follower-count').textContent = data.account.followers.toLocaleString();
+            document.getElementById('post-count').textContent = data.account.posts;
+            
+            // Update posts
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            
+            data.recent_posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'card post-card';
+                postElement.innerHTML = `
+                    <img src="${post.media_url || post.thumbnail_url}" class="post-media" alt="Post media">
+                    <p>${post.caption || "No caption"}</p>
+                    <div class="post-stats">
+                        <span><span class="material-icons" style="vertical-align: middle; color: red;">favorite</span> ${post.like_count || 0}</span>
+                        <span><span class="material-icons" style="vertical-align: middle; color: var(--text-muted);">comment</span> ${post.comments_count || 0}</span>
+                        <button class="btn" onclick="downloadPost('${post.id}', '${post.media_url}')" style="padding: 5px 10px; font-size: 0.8rem;">
+                            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">download</span> Download
+                        </button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+    </script>
+</body>
+</html>

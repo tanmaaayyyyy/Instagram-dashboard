@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Driven Platform - Premium Responsive Homepage</title>
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+  <style>
+    /* CSS Reset */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    /* Root variables for theme */
+    :root {
+      --header-height: 64px;
+      --color-bg: rgba(255 255 255 / 0.75);
+      --color-bg-gradient-start: rgba(248 250 252 / 0.85);
+      --color-bg-gradient-end: rgba(241 245 249 / 0.85);
+      --color-text: #1e293b;
+      --color-text-muted: #64748b;
+      --color-primary: #6366f1;
+      --color-primary-hover: #4f46e5;
+      --color-shadow: rgba(99, 102, 241, 0.25);
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+      --spacing-xs: 8px;
+      --spacing-sm: 12px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-xxl: 48px;
+      --border-radius: 12px;
+      --transition-fast: 0.3s ease-out;
+      --z-header: 1000;
+      --color-bg-contrast: #f9fafb;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    html {
+      font-family: var(--font-family);
+      font-size: 16px;
+      color: var(--color-text);
+      background: var(--color-bg-contrast);
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 200vh; /* For demo scroll */
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      outline-offset: 2px;
+      transition: color var(--transition-fast);
+    }
+    a:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+    a:hover {
+      color: var(--color-primary);
+    }
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      color: inherit;
+      outline-offset: 2px;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+    }
+    button:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: 12px;
+      border: 3px solid #f1f5f9;
+      transition: background-color 0.3s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-primary-hover);
+    }
+
+    /* Header Base */
+    header {
+      position: sticky;
+      top: 0;
+      height: var(--header-height);
+      width: 100%;
+      background: var(--color-bg);
+      background: linear-gradient(90deg, var(--color-bg-gradient-start), var(--color-bg-gradient-end));
+      backdrop-filter: saturate(180%) blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-lg);
+      box-shadow: 0 4px 32px var(--color-shadow);
+      z-index: var(--z-header);
+      user-select: none;
+    }
+
+    /* Logo Section */
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      color: var(--color-primary);
+      letter-spacing: 0.06em;
+      user-select: text;
+      white-space: nowrap;
+    }
+
+    .logo-icon {
+      font-family: 'Material Icons';
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-right: var(--spacing-sm);
+      color: var(--color-primary);
+      transform: translateY(2px);
+    }
+
+    /* Navigation styles */
+    nav.nav-links {
+      display: flex;
+      gap: var(--spacing-sm);
+      align-items: center;
+      font-weight: 600;
+      font-size: clamp(0.875rem, 1vw, 1rem);
+      color: var(--color-text);
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--border-radius);
+      transition: all var(--transition-fast);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--color-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-fast) ease, left var(--transition-fast) ease;
+      border-radius: var(--border-radius);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      width: 100%;
+      left: 50%;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--color-bg);
+      backdrop-filter: saturate(180%) blur(16px);
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 32px var(--color-shadow);
+      padding: var(--spacing-sm) 0;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--transition-fast);
+      z-index: var(--z-header);
+    }
+
+    .nav-item:hover .dropdown-menu,
+    .nav-item:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: var(--spacing-xs) var(--spacing-md);
+      color: var(--color-text);
+      transition: all var(--transition-fast);
+    }
+
+    .dropdown-link:hover,
+    .dropdown-link:focus-visible {
+      color: var(--color-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* Right Controls */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      font-size: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .header-controls button,
+    .header-controls a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-xs);
+      border-radius: var(--border-radius);
+      color: var(--color-text-muted);
+      background: transparent;
+      transition: 
+        color var(--transition-fast),
+        background-color var(--transition-fast);
+      position: relative;
+    }
+    .header-controls button:hover,
+    .header-controls a:hover,
+    .header-controls button:focus-visible,
+    .header-controls a:focus-visible{
+      color: var(--color-primary);
+      background: rgba(99, 102, 241, 0.1);
+      outline-offset: 0;
+    }
+
+    /* Notification Badge */
+    .badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 10px;
+      height: 10px;
+      background-color: #ef4444; /* red-500 */
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    /* Hamburger Menu for mobile */
+    .mobile-menu-button {
+      display: none;
+      font-family: 'Material Icons';
+      font-size: 2.25rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: color var(--transition-fast);
+    }
+    .mobile-menu-button:hover,
+    .mobile-menu-button:focus-visible {
+      color: var(--color-primary);
+      outline-offset: 0;
+    }
+
+    /* Mobile Nav Panel */
+    .mobile-nav-panel {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-bg);
+      backdrop-filter: saturate(180%) blur(18px);
+      box-shadow: 0 4px 32px var(--color-shadow);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+      z-index: calc(var(--z-header) + 10);
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-lg);
+      overflow-y: auto;
+    }
+    .mobile-nav-panel.open {
+      transform: translateX(0);
+    }
+
+    .mobile-nav-item {
+      padding: var(--spacing-md) 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .mobile-dropdown-icon {
+      font-family: 'Material Icons';
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-dropdown-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding-left: var(--spacing-md);
+    }
+
+    .mobile-dropdown-menu.open {
+      max-height: 500px;
+    }
+
+    .mobile-dropdown-link {
+      display: block;
+      padding: var(--spacing-sm) 0;
+      color: var(--color-text-muted);
+    }
+
+    /* Visually hidden for screen reader */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Main Container */
+    main {
+      padding: 0 var(--spacing-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    section.hero {
+      min-height: calc(100vh - var(--header-height));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: var(--spacing-xxl);
+      padding-top: var(--spacing-xxl);
+      text-align: center;
+      color: var(--color-text);
+    }
+
+    section.hero h1 {
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      max-width: 720px;
+      margin: 0 auto var(--spacing-lg);
+      user-select: text;
+    }
+
+    section.hero p {
+      font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+      max-width: 600px;
+      margin: 0 auto var(--spacing-xl);
+      color: var(--color-text-muted);
+      user-select: text;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: inline-flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      font-weight: 700;
+      border-radius: var(--border-radius);
+      padding: 0.85rem 2.25rem;
+      font-size: 1.125rem;
+      cursor: pointer;
+      border: none;
+      transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      user-select: none;
+      min-width: 160px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background-color: var(--color-primary-hover);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+      outline-offset: 0;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      box-shadow: none;
+      user-select: none;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background-color: var(--color-primary);
+      color: white;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+      outline-offset: 0;
+    }
+
+    /* Features Section */
+    section.features {
+      margin: var(--spacing-xxl) 0;
+      padding-bottom: var(--spacing-xxl);
+    }
+
+    section.features h2 {
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+      user-select: text;
+    }
+
+    .features-grid {
+      display: grid;
+      gap: var(--spacing-xl);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: start;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+      user-select: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover,
+    .feature-card:focus-within {
+      box-shadow: 0 10px 50px rgba(99, 102, 241, 0.3);
+      transform: translateY(-8px);
+      outline-offset: 0;
+    }
+
+    .feature-icon {
+      font-family: 'Material Icons';
+      font-size: 3.25rem;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-text);
+      user-select: text;
+    }
+
+    .feature-desc {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      user-select: text;
+    }
+
+    .feature-image {
+      margin-top: var(--spacing-lg);
+      width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* Feature Dropdown Content */
+    .feature-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .feature-card.active .feature-dropdown {
+      max-height: 500px;
+      margin-top: var(--spacing-md);
+    }
+
+    .feature-dropdown-content {
+      padding: var(--spacing-md);
+      background: rgba(241, 245, 249, 0.5);
+      border-radius: var(--border-radius);
+      text-align: left;
+    }
+
+    .feature-dropdown h4 {
+      margin-bottom: var(--spacing-xs);
+      color: var(--color-primary);
+    }
+
+    .feature-dropdown ul {
+      padding-left: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .feature-dropdown li {
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .dropdown-arrow {
+      font-family: 'Material Icons';
+      transition: transform 0.3s ease;
+      margin-top: var(--spacing-sm);
+      color: var(--color-primary);
+    }
+
+    .feature-card.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Logos Section */
+    section.logos {
+      margin: var(--spacing-xxl) 0 var(--spacing-xxl);
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: var(--spacing-lg) 0;
+      background: #fafafa;
+    }
+
+    .logos-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-xl);
+      align-items: center;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .logo-item {
+      filter: grayscale(100%);
+      opacity: 0.55;
+      transition: opacity var(--transition-fast) ease, filter var(--transition-fast) ease;
+      max-height: 32px;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+    }
+    .logo-item:hover,
+    .logo-item:focus-visible {
+      filter: none;
+      opacity: 1;
+      outline-offset: 0;
+    }
+
+    .logo-item img {
+      max-height: 32px;
+      max-width: 120px;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Responsive Breakpoints */
+
+    /* Mobile first: <=640px */
+    @media (max-width: 640px) {
+      nav.nav-links {
+        display: none;
+      }
+      .mobile-menu-button {
+        display: block;
+      }
+    }
+
+    /* Tablet 641 - 1024px */
+    @media (min-width: 641px) and (max-width:1024px) {
+      nav.nav-links {
+        gap: var(--spacing-sm);
+      }
+      .hero-buttons {
+        gap: var(--spacing-sm);
+      }
+    }
+
+    /* Desktop 1025px+ */
+    @media (min-width: 1025px) {
+      .mobile-nav-panel {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner" aria-label="Primary">
+    <a href="/" class="logo" aria-label="Homepage">
+      <span class="logo-icon" aria-hidden="true">psychology</span> AI Platform
+    </a>
+
+    <nav aria-label="Primary navigation" class="nav-links">
+      <div class="nav-item">
+        <a href="#" class="nav-link" tabindex="0">Home</a>
+      </div>
+      
+      <div class="nav-item">
+        <button class="nav-link" tabindex="0" aria-expanded="false" aria-haspopup="true">
+          Features
+          <span class="material-icons" style="font-size: 1rem; margin-left: 4px;">expand_more</span>
+        </button>
+        <div class="dropdown-menu" role="menu">
+          <a href="#features" class="dropdown-link" tabindex="0">All Features</a>
+          <a href="{{ url_for('dashboard.dashboard') }}" class="dropdown-link" tabindex="0">Instagram Dashboard</a>
+          <a href="#" class="dropdown-link" tabindex="0">Collaboration</a>
+          <a href="#" class="dropdown-link" tabindex="0">API Integration</a>
+        </div>
+      </div>
+      
+      <div class="nav-item">
+        <a href="#pricing" class="nav-link" tabindex="0">Pricing</a>
+      </div>
+      
+      <div class="nav-item">
+        <a href="#docs" class="nav-link" tabindex="0">Docs</a>
+      </div>
+      
+      <div class="nav-item">
+        <a href="#contact" class="nav-link" tabindex="0">Contact</a>
+      </div>
+    </nav>
+
+    <div class="header-controls">
+      <button aria-label="Search" class="icon-button" type="button" title="Search">
+        <span class="material-icons" aria-hidden="true">search</span>
+      </button>
+      <button aria-label="Notifications" class="icon-button" type="button" title="Notifications">
+        <span class="material-icons" aria-hidden="true">notifications</span>
+        <span class="badge" aria-hidden="true"></span>
+      </button>
+      <a href="#cart" aria-label="Shopping Cart" class="icon-button" title="Shopping Cart">
+        <span class="material-icons" aria-hidden="true">shopping_cart</span>
+      </a>
+      <button aria-label="User Account" class="icon-button" type="button" title="User Account">
+        <span class="material-icons" aria-hidden="true">person</span>
+      </button>
+      <button aria-label="Toggle menu" class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="true" title="Toggle menu">
+        <span class="material-icons" aria-hidden="true">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <nav id="mobile-menu" class="mobile-nav-panel" aria-label="Mobile primary navigation" hidden>
+    <div class="mobile-nav-item">
+      <a href="#" class="mobile-nav-link" tabindex="0">Home</a>
+    </div>
+    
+    <div class="mobile-nav-item">
+      <button class="mobile-nav-link mobile-dropdown-toggle" tabindex="0" aria-expanded="false">
+        Features
+        <span class="mobile-dropdown-icon">expand_more</span>
+      </button>
+      <div class="mobile-dropdown-menu">
+        <a href="#features" class="mobile-dropdown-link" tabindex="0">All Features</a>
+        <a href="index.html" class="mobile-dropdown-link" tabindex="0">Instagram dashboard</a>
+        <a href="#" class="mobile-dropdown-link" tabindex="0">Analytics</a>
+        <a href="#" class="mobile-dropdown-link" tabindex="0">API Integration</a>
+      </div>
+    </div>
+    
+    <div class="mobile-nav-item">
+      <a href="#pricing" class="mobile-nav-link" tabindex="0">Pricing</a>
+    </div>
+    
+    <div class="mobile-nav-item">
+      <a href="#docs" class="mobile-nav-link" tabindex="0">Docs</a>
+    </div>
+    
+    <div class="mobile-nav-item">
+      <a href="#contact" class="mobile-nav-link" tabindex="0">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" role="region" aria-label="Introductory content">
+      <h1>Build & Ship AI Products Faster</h1>
+      <p>Design, prototype, and launch intelligent applications with the most powerful AI toolkit. Streamline your workflow and accelerate your impact.</p>
+      <div class="hero-buttons">
+        <a href="#getstarted" class="btn-primary" role="button">Get Started</a>
+        <a href="#learnmore" class="btn-secondary" role="button">Learn More</a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features" role="region" aria-labelledby="features-title">
+      <h2 id="features-title">Powerful Features That Empower Your Team</h2>
+      <div class="features-grid">
+        <article class="feature-card" tabindex="0" aria-label="Fast Prototyping feature" onclick="toggleFeatureCard(this)" onkeydown="handleFeatureCardKeydown(event, this)">
+          <div class="feature-content">
+            <span class="feature-icon" aria-hidden="true">bolt</span>
+            <h3 class="feature-title">Fast Prototyping</h3>
+            <p class="feature-desc">Drag, drop, and configure AI models with a visual editor built for speed and flexibility.</p>
+            <img
+              class="feature-image"
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cb4cd5bf-831f-47c1-9f88-48f6e48bb7b5.png"
+              alt="Screenshot showing a visual drag and drop AI model editor interface"
+              loading="lazy"
+              width="600"
+              height="338"
+            />
+          </div>
+          <div class="feature-dropdown">
+            <div class="feature-dropdown-content">
+              <h4>Key Benefits:</h4>
+              <ul>
+                <li>Pre-built AI model templates</li>
+                <li>Visual workflow designer</li>
+                <li>Real-time performance preview</li>
+                <li>One-click deployment</li>
+              </ul>
+              <h4>Use Cases:</h4>
+              <p>Perfect for rapid experimentation and proof-of-concept development. Reduce time-to-market by 60% compared to traditional coding.</p>
+            </div>
+          </div>
+          <span class="dropdown-arrow">expand_more</span>
+        </article>
+
+        <article class="feature-card" tabindex="0" aria-label="Collaboration Tools feature" onclick="toggleFeatureCard(this)" onkeydown="handleFeatureCardKeydown(event, this)">
+          <div class="feature-content">
+            <span class="feature-icon" aria-hidden="true">group</span>
+            <h3 class="feature-title">Collaboration Tools</h3>
+            <p class="feature-desc">Work seamlessly with your team with real-time sharing, commenting, and version history.</p>
+            <img
+              class="feature-image"
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d1f7363e-bdd9-4910-a893-8d50ac82c982.png"
+              alt="Illustration of team collaboration dashboard with comments and user avatars"
+              loading="lazy"
+              width="600"
+              height="338"
+            />
+          </div>
+          <div class="feature-dropdown">
+            <div class="feature-dropdown-content">
+              <h4>Key Benefits:</h4>
+              <ul>
+                <li>Real-time co-editing</li>
+                <li>Version control with visual diff</li>
+                <li>Role-based permissions</li>
+                <li>Integrated chat and comments</li>
+              </ul>
+              <h4>Use Cases:</h4>
+              <p>Ideal for distributed teams working on complex AI projects. Eliminate version conflicts and streamline feedback loops.</p>
+            </div>
+          </div>
+          <span class="dropdown-arrow">expand_more</span>
+        </article>
+
+        <article class="feature-card" tabindex="0" aria-label="API & Integration feature" onclick="toggleFeatureCard(this)" onkeydown="handleFeatureCardKeydown(event, this)">
+          <div class="feature-content">
+            <span class="feature-icon" aria-hidden="true">code</span>
+            <h3 class="feature-title">API & Integration</h3>
+            <p class="feature-desc">Easily connect AI capabilities to your existing infrastructure with flexible APIs and webhooks.</p>
+            <img
+              class="feature-image"
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ab00072-fa0f-41b0-bfe6-2755440914c1.png"
+              alt="Code snippet and API integration interface showing configuration options"
+              loading="lazy"
+              width="600"
+              height="338"
+            />
+          </div>
+          <div class="feature-dropdown">
+            <div class="feature-dropdown-content">
+              <h4>Key Benefits:</h4>
+              <ul>
+                <li>RESTful API endpoints</li>
+                <li>Webhook support</li>
+                <li>SDKs for 8+ languages</li>
+                <li>Detailed API documentation</li>
+              </ul>
+              <h4>Use Cases:</h4>
+              <p>Seamlessly integrate AI capabilities into your existing applications and workflows. Supports everything from simple embeds to complex enterprise systems.</p>
+            </div>
+          </div>
+          <span class="dropdown-arrow">expand_more</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- Logos Section -->
+    <section class="logos" role="region" aria-label="Trusted by leading companies">
+      <div class="logos-list" aria-live="off">
+        <div class="logo-item" tabindex="0">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/195c1558-85ef-4446-9057-26cdd1586508.png" alt="Company One logo in blue and white" loading="lazy"/>
+        </div>
+        <div class="logo-item" tabindex="0">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8698afda-2e58-4ef0-8273-d26a0e507d7b.png" alt="Company Two logo in blue and white" loading="lazy"/>
+        </div>
+        <div class="logo-item" tabindex="0">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d41e45a4-1439-4709-a028-889a726fa9c7.png" alt="Company Three logo in blue and white" loading="lazy"/>
+        </div>
+        <div class="logo-item" tabindex="0">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f0de759c-e8d4-4132-912f-111eef341220.png" alt="Company Four logo in blue and white" loading="lazy"/>
+        </div>
+        <div class="logo-item" tabindex="0">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ec474e1-e171-4ce6-8b23-dc1b8dbe6480.png" alt="Company Five logo in blue and white" loading="lazy"/>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mobile menu toggle button and panel
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenuPanel = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      const isOpen = mobileMenuPanel.classList.toggle('open');
+      mobileMenuPanel.hidden = !isOpen;
+      mobileMenuButton.setAttribute('aria-expanded', isOpen.toString());
+
+      // Change icon to close or menu
+      if (isOpen) {
+        mobileMenuButton.firstElementChild.textContent = 'close';
+      } else {
+        mobileMenuButton.firstElementChild.textContent = 'menu';
+      }
+    });
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenuPanel.classList.contains('open')) {
+        mobileMenuPanel.classList.remove('open');
+        mobileMenuPanel.hidden = true;
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenuButton.firstElementChild.textContent = 'menu';
+        mobileMenuButton.focus();
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (
+        mobileMenuPanel.classList.contains('open') &&
+        !mobileMenuPanel.contains(e.target) &&
+        !mobileMenuButton.contains(e.target)
+      ) {
+        mobileMenuPanel.classList.remove('open');
+        mobileMenuPanel.hidden = true;
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenuButton.firstElementChild.textContent = 'menu';
+      }
+    });
+
+    // Mobile dropdown menu toggle
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+      button.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        this.querySelector('.mobile-dropdown-icon').textContent = isExpanded ? 'expand_more' : 'expand_less';
+        
+        const dropdownMenu = this.nextElementSibling;
+        if (isExpanded) {
+          dropdownMenu.classList.remove('open');
+        } else {
+          dropdownMenu.classList.add('open');
+        }
+      });
+    });
+
+    // Feature card dropdown functionality
+    function toggleFeatureCard(card) {
+      // Close all other open feature cards
+      document.querySelectorAll('.feature-card').forEach(item => {
+        if (item !== card && item.classList.contains('active')) {
+          item.classList.remove('active');
+          item.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // Toggle the clicked card
+      card.classList.toggle('active');
+      const isExpanded = card.classList.contains('active');
+      card.setAttribute('aria-expanded', isExpanded);
+      
+      // Scroll to show the expanded content if needed
+      if (isExpanded) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Keyboard accessibility for feature cards
+    function handleFeatureCardKeydown(event, card) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleFeatureCard(card);
+      }
+    }
+
+    // Initialize feature cards with proper ARIA attributes
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.setAttribute('aria-expanded', 'false');
+    });
+  </script>
+</body>
+</html>
